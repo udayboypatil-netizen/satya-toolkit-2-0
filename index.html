@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Satya Toolkit 2.0</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#090711;color:#fff;
+ font-family:Arial,sans-serif;min-height:100vh;
+ display:flex;justify-content:center;align-items:center;
+ padding:20px;
+}
+.container{
+ width:100%;max-width:430px;
+ background:#171225;border:1px solid #49336b;
+ border-radius:22px;padding:28px 22px;
+ box-shadow:0 15px 50px #0008;
+}
+.logo{
+ width:65px;height:65px;border-radius:18px;
+ background:linear-gradient(135deg,#9b45ff,#5420a8);
+ display:grid;place-items:center;
+ font-size:27px;font-weight:bold;margin:auto;
+}
+h1{text-align:center;font-size:25px;margin:17px 0 7px}
+.sub{text-align:center;color:#b9a9d2;font-size:13px}
+.line{height:1px;background:#403052;margin:23px 0}
+label{display:block;margin:15px 0 8px;font-size:13px;color:#d9c9f2}
+input{
+ width:100%;padding:15px;border-radius:11px;
+ background:#0d0a16;border:1px solid #594275;
+ color:white;font-size:15px;outline:none;
+}
+input:focus{border-color:#b16cff}
+button{
+ width:100%;padding:15px;margin-top:20px;
+ border:0;border-radius:11px;
+ background:linear-gradient(90deg,#9139ef,#6025b7);
+ color:white;font-weight:bold;font-size:16px;
+}
+.note{font-size:12px;color:#a99bbd;text-align:center;line-height:1.6;margin-top:18px}
+a{color:#c99aff;text-decoration:none}
+#message{font-size:13px;text-align:center;margin-top:15px;color:#ffd37c}
+.footer{text-align:center;color:#766b87;font-size:11px;margin-top:25px}
+</style>
+</head>
+<body>
+<div class="container">
+ <div class="logo">ST</div>
+ <h1>Satya Toolkit 2.0</h1>
+ <div class="sub">Independent StarMaker Toolkit</div>
+ <div class="line"></div>
+
+ <form id="activationForm">
+  <label for="username">Your Name</label>
+  <input id="username" type="text" placeholder="Enter your name" required>
+
+  <label for="activationKey">Activation Key</label>
+  <input id="activationKey" type="text" placeholder="Enter activation key" required>
+
+  <button type="submit">Activate Account</button>
+ </form>
+
+ <div id="message"></div>
+
+ <div class="note">
+  Don't have an activation key?<br>
+  Contact Admin:
+  <a href="https://t.me/Sunilpatil1900" target="_blank">@Sunilpatil1900</a>
+ </div>
+
+ <div class="footer">
+  SATYA TOOLKIT 2.0 · Independent Project
+ </div>
+</div>
+
+<script>
+document.getElementById("activationForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ const name=document.getElementById("username").value.trim();
+ const key=document.getElementById("activationKey").value.trim();
+ const message=document.getElementById("message");
+
+ if(!name || !key){
+  message.textContent="Please enter your name and activation key.";
+  return;
+ }
+
+ message.textContent="Activation service is being connected. Please try again later.";
+});
+</script>
+</body>
+</html>
