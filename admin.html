@@ -4,86 +4,139 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Satya Toolkit 2.0 - Admin Panel</title>
+<title>Satya Toolkit 2.0 - Admin</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#0b1020;color:#fff}
+body{margin:0;background:#0b1020;color:white;font-family:Arial,sans-serif}
 header{padding:20px;background:#151d35;border-bottom:1px solid #293452}
 header h2{margin:0;color:#a78bfa}
-header p{margin:7px 0 0;color:#aab4cf;font-size:13px}
-main{max-width:900px;margin:25px auto;padding:15px}
-.card{background:#151d35;border:1px solid #293452;border-radius:14px;padding:18px;margin-bottom:16px}
-h3{margin-top:0;color:#c4b5fd}
-input,select{width:100%;padding:13px;margin:7px 0 14px;border-radius:8px;border:1px solid #394765;background:#0b1020;color:white}
-button{width:100%;padding:13px;border:0;border-radius:8px;background:#7048e8;color:white;font-weight:bold;font-size:15px}
-button:disabled{background:#45405d;color:#c7c3d4}
-small,.muted{color:#aab4cf;line-height:1.6}
-.status{padding:12px;background:#302a17;color:#fbd38d;border-radius:8px;font-size:13px;line-height:1.6}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.stat{background:#202b49;padding:15px;border-radius:10px}
-.stat b{display:block;font-size:23px;color:#c4b5fd;margin-bottom:5px}
+main{max-width:500px;margin:35px auto;padding:15px}
+.card{background:#151d35;border:1px solid #293452;border-radius:14px;padding:22px}
+h3{color:#c4b5fd;margin-top:0}
+input{width:100%;padding:14px;margin:8px 0 16px;background:#0b1020;border:1px solid #394765;border-radius:8px;color:white}
+button{width:100%;padding:14px;border:0;border-radius:8px;background:#7048e8;color:white;font-weight:bold;font-size:15px;cursor:pointer}
+button:disabled{opacity:.5}
+#message{padding:12px;margin-top:15px;border-radius:8px;background:#202b49;line-height:1.6;display:none}
+#dashboard{display:none}
+.note{font-size:13px;color:#aab4cf;line-height:1.6}
 </style>
 </head>
 <body>
 
 <header>
 <h2>Satya Toolkit 2.0</h2>
-<p>Administrator Control Panel</p>
+<p>Administrator Login</p>
 </header>
 
 <main>
-
-<div class="card">
+<div class="card" id="loginCard">
 <h3>Admin Login</h3>
+
+<form id="loginForm">
 <label>Email Address</label>
-<input type="email" placeholder="Admin email">
+<input id="email" type="email" placeholder="Admin email" required autocomplete="username">
+
 <label>Password</label>
-<input type="password" placeholder="Admin password">
-<button disabled>Firebase Login — Connection Pending</button>
-<p class="muted">Firebase Authentication connect hone ke baad hi secure login enable hoga.</p>
+<input id="password" type="password" placeholder="Admin password" required autocomplete="current-password">
+
+<button id="loginBtn" type="submit">Login</button>
+</form>
+
+<div id="message" role="status"></div>
+
+<p class="note">
+Firebase Email/Password Authentication se login hoga.
+Sirf login hone se Admin permission nahi milti.
+</p>
 </div>
 
-<div class="card">
-<h3>Dashboard Overview</h3>
-<div class="grid">
-<div class="stat"><b>—</b><small>Total Users</small></div>
-<div class="stat"><b>—</b><small>Active Keys</small></div>
-<div class="stat"><b>—</b><small>Expired Keys</small></div>
-<div class="stat"><b>—</b><small>Revoked Keys</small></div>
+<div class="card" id="dashboard">
+<h3>Login Successful</h3>
+<p id="account"></p>
+<div id="adminNotice" class="note">
+Firebase login ho gaya hai, lekin secure Admin permission abhi configure nahi hui hai.
+Activation Key Generator aur User Management filhaal band rahenge.
 </div>
+<br>
+<button id="logoutBtn" type="button">Logout</button>
 </div>
-
-<div class="card">
-<h3>Generate Activation Key</h3>
-<label>Select Plan</label>
-<select disabled>
-<option>1 Day</option>
-<option>7 Days</option>
-<option>30 Days</option>
-<option>90 Days</option>
-</select>
-<button disabled>Generate Key — Backend Pending</button>
-</div>
-
-<div class="card">
-<h3>User Management</h3>
-<input type="text" placeholder="Search user by name or ID" disabled>
-<button disabled>Search Users — Backend Pending</button>
-</div>
-
-<div class="card">
-<h3>Other Settings</h3>
-<button disabled>Manage Announcements</button><br><br>
-<button disabled>Manage Intro Video</button><br><br>
-<button disabled>API Settings</button><br><br>
-<button disabled>Maintenance Mode</button>
-</div>
-
-<div class="status">
-<strong>Important:</strong> Yeh Admin Panel ka initial interface hai. Firebase authentication, admin permissions aur secure activation-key backend abhi connect nahi hain. Isliye buttons jaanbujhkar disabled hain. Backend connect hone ke baad hi real key generation aur user management kaam karega.
-</div>
-
 </main>
+
+<script type="module">
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAjUb8d_rXrsgJ9F79Zg-nxlwlpb0YOyQQ",
+  authDomain: "satya-toolkit-2-0.firebaseapp.com",
+  projectId: "satya-toolkit-2-0",
+  storageBucket: "satya-toolkit-2-0.firebasestorage.app",
+  messagingSenderId: "514983769651",
+  appId: "1:514983769651:web:fc436fd9332647cc49d546"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const loginCard = document.getElementById("loginCard");
+const dashboard = document.getElementById("dashboard");
+const message = document.getElementById("message");
+const loginBtn = document.getElementById("loginBtn");
+
+function showMessage(text) {
+  message.textContent = text;
+  message.style.display = "block";
+}
+
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  loginBtn.disabled = true;
+  loginBtn.textContent = "Logging in...";
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    console.error(error);
+    showMessage("Login nahi hua. Email aur password check karo.");
+  } finally {
+    loginBtn.disabled = false;
+    loginBtn.textContent = "Login";
+  }
+});
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    loginCard.style.display = "none";
+    dashboard.style.display = "block";
+    document.getElementById("account").textContent =
+      "Logged in account: " + user.email;
+  } else {
+    dashboard.style.display = "none";
+    loginCard.style.display = "block";
+    document.getElementById("password").value = "";
+  }
+});
+
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  try {
+    await signOut(auth);
+  } catch (error) {
+    showMessage("Logout nahi hua. Dobara try karo.");
+  }
+});
+</script>
+
 </body>
 </html>
-
