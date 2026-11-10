@@ -1,1 +1,89 @@
 
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Satya Toolkit 2.0 - Admin Panel</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#0b1020;color:#fff}
+header{padding:20px;background:#151d35;border-bottom:1px solid #293452}
+header h2{margin:0;color:#a78bfa}
+header p{margin:7px 0 0;color:#aab4cf;font-size:13px}
+main{max-width:900px;margin:25px auto;padding:15px}
+.card{background:#151d35;border:1px solid #293452;border-radius:14px;padding:18px;margin-bottom:16px}
+h3{margin-top:0;color:#c4b5fd}
+input,select{width:100%;padding:13px;margin:7px 0 14px;border-radius:8px;border:1px solid #394765;background:#0b1020;color:white}
+button{width:100%;padding:13px;border:0;border-radius:8px;background:#7048e8;color:white;font-weight:bold;font-size:15px}
+button:disabled{background:#45405d;color:#c7c3d4}
+small,.muted{color:#aab4cf;line-height:1.6}
+.status{padding:12px;background:#302a17;color:#fbd38d;border-radius:8px;font-size:13px;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.stat{background:#202b49;padding:15px;border-radius:10px}
+.stat b{display:block;font-size:23px;color:#c4b5fd;margin-bottom:5px}
+</style>
+</head>
+<body>
+
+<header>
+<h2>Satya Toolkit 2.0</h2>
+<p>Administrator Control Panel</p>
+</header>
+
+<main>
+
+<div class="card">
+<h3>Admin Login</h3>
+<label>Email Address</label>
+<input type="email" placeholder="Admin email">
+<label>Password</label>
+<input type="password" placeholder="Admin password">
+<button disabled>Firebase Login — Connection Pending</button>
+<p class="muted">Firebase Authentication connect hone ke baad hi secure login enable hoga.</p>
+</div>
+
+<div class="card">
+<h3>Dashboard Overview</h3>
+<div class="grid">
+<div class="stat"><b>—</b><small>Total Users</small></div>
+<div class="stat"><b>—</b><small>Active Keys</small></div>
+<div class="stat"><b>—</b><small>Expired Keys</small></div>
+<div class="stat"><b>—</b><small>Revoked Keys</small></div>
+</div>
+</div>
+
+<div class="card">
+<h3>Generate Activation Key</h3>
+<label>Select Plan</label>
+<select disabled>
+<option>1 Day</option>
+<option>7 Days</option>
+<option>30 Days</option>
+<option>90 Days</option>
+</select>
+<button disabled>Generate Key — Backend Pending</button>
+</div>
+
+<div class="card">
+<h3>User Management</h3>
+<input type="text" placeholder="Search user by name or ID" disabled>
+<button disabled>Search Users — Backend Pending</button>
+</div>
+
+<div class="card">
+<h3>Other Settings</h3>
+<button disabled>Manage Announcements</button><br><br>
+<button disabled>Manage Intro Video</button><br><br>
+<button disabled>API Settings</button><br><br>
+<button disabled>Maintenance Mode</button>
+</div>
+
+<div class="status">
+<strong>Important:</strong> Yeh Admin Panel ka initial interface hai. Firebase authentication, admin permissions aur secure activation-key backend abhi connect nahi hain. Isliye buttons jaanbujhkar disabled hain. Backend connect hone ke baad hi real key generation aur user management kaam karega.
+</div>
+
+</main>
+</body>
+</html>
+
